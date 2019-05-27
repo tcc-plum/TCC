@@ -82,4 +82,5 @@ class SkyBiometry:
         self.loadToFirebaseDatabase(self.f_db, sky_biometry)
 
         print(sky_biometry)
+        return sky_biometry
 

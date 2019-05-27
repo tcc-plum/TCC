@@ -1,10 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+
+		<!--================Home Banner Area =================-->
+		<section class="home_banner_area">
+			<div class="banner_inner">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="home_left_img">
+								<img class="img-fluid" src="/static/img/banner/home-left.png" alt="">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="banner_content">
+								<h2>
+									
+									Teste Gratuitamente! <br>
+									
+								</h2>
+								<h3>
+									Utilize o sistema de cameras openCV, mande as imagens para o nosso banco e veja o resultado em "Sky test".
+									<br>
+									<br>
+								</h3>
+								<p>
+									Conheça a nossa API de reconhecimento de emoções e de um boost no seu negócio! 
+									
+								</p>
+								<div class="d-flex align-items-center">
+									<a id="play-home-video" class="video-play-button" href="https://youtu.be/aJOTlE1K90k?list=RDMMaJOTlE1K90k">
+										<span></span>
+									</a>
+									<div class="watch_video text-uppercase">
+										Assista o nosso video promocional!
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--================End Home Banner Area =================-->
+
+{% endblock content %}
