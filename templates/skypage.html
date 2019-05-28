@@ -26,8 +26,12 @@
                                         <div class="section_content">
                                             <h6>Teste com uma imagem!</h6>
                                             <h1>Coloque o link de uma imagem e veja nossa API fazer mágica! </h1>
-                                            <p><input name="text" placeholder="URL da imagem" required="" type="url" size="60" class="form-control form-rounded"></p>
-                                            <a class="primary_btn" href="#">Enviar</a>
+                                            <p>
+												<form action="/consulta" method="POST">
+													<input name="url" placeholder="URL da imagem" required="" type="text" size="60" class="form-control form-rounded">
+													<input class="primary_btn" type="submit" value="Enviar">
+												</form>											
+											</p>
                                         </div>
                                     </div>
 								</div>

@@ -26,7 +26,8 @@
 									<div class="section_content">
 										<h6>Confira todas as imagens abaixo!</h6>
 										<h1>Veja os rostos e emoções do seu cliente!</h1>
-										<p>Nossa API utilizou reconhecimento facial para detecção de emoções e trouxe todos os dados</p>
+                                        <p>Nossa API utilizou reconhecimento facial para detecção de emoções e trouxe todos os dados</p>
+                                        <p> {{ data }}</p>
 									</div>
 								</div>
 							</div>
@@ -53,20 +54,27 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="blog_items">
                                     <div class="blog_img_box">
-                                        <img class="img-fluid" src="/static/img/blog_img1.png" alt="">
+                                            <img class="img-fluid" src="{{ data['photos'][0]['url'] }}" alt="">
                                     </div>
                                     <div class="blog_content">
-                                        <a class="title" href="/index">Portable Fashion for women</a>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
-                                        <div class="date">
-                                            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i>13th Dec </a>
-                                            <a href="#"><i class="fa fa-heart" aria-hidden="true"></i> 15</a>
-                                            <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 05</a>
-                                        </div>
+                                        <a class="title" href="/index">{{ data['status'] }}</a>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="text-white  list-group">Gênero: {{ data['photos'][0]['tags'][0]['attributes']['gender']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['gender']['confidence'] }}</li>
+                                                <li class="text-white  list-group">Óculos: {{ data['photos'][0]['tags'][0]['attributes']['glasses']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['glasses']['confidence'] }}</li>
+                                                <li class="text-white  list-group">Sorrindo: {{ data['photos'][0]['tags'][0]['attributes']['smiling']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['smiling']['confidence'] }}</li>
+                                                <li class="text-white  list-group">Idade: {{ data['photos'][0]['tags'][0]['attributes']['age_est']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['age_est']['confidence'] }}</li>
+                                                <li class="text-white  list-group">Humor: {{ data['photos'][0]['tags'][0]['attributes']['mood']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['mood']['confidence'] }}</li>
+                                                <li class="text-white  list-group">Olhos: {{ data['photos'][0]['tags'][0]['attributes']['eyes']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['eyes']['confidence'] }}</li>
+                                                <li class="text-white  list-group">Raiva: {{ data['photos'][0]['tags'][0]['attributes']['anger']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['anger']['confidence'] }}</li>
+                                                <li class="text-white  list-group">Medo: {{ data['photos'][0]['tags'][0]['attributes']['fear']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['fear']['confidence'] }}</li>
+                                                <li class="text-white  list-group">Felicidade: {{ data['photos'][0]['tags'][0]['attributes']['happiness']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['happiness']['confidence'] }}</li>
+                                                <li class="text-white  list-group">Tristeza: {{ data['photos'][0]['tags'][0]['attributes']['sadness']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['sadness']['confidence'] }}</li>
+                                                <li class="text-white  list-group">Surpresa: {{ data['photos'][0]['tags'][0]['attributes']['surprise']['value'] }} | Confiança: {{ data['photos'][0]['tags'][0]['attributes']['surprise']['confidence'] }}</li>
+                                            </ul>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-4 col-md-6">
                                 <div class="blog_items">
                                     <div class="blog_img_box">
