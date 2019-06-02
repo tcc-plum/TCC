@@ -72,7 +72,7 @@ class SkyBiometry:
         result_db = f_db.child("sky").push(json_file)
         return result_db
 
-    def skyBiometry(self, url_image, f_url_image, cluster_id):
+    def skyBiometry(self, url_image, f_url_image, cluster_id, log):
         # read image from url
         # image_http = requests.get(url_image)
         # image = Image.open(BytesIO(image_http.content))
@@ -98,14 +98,23 @@ class SkyBiometry:
         # pid = sky_biometry['operation_id']
 
         # self.loadToFirebaseStorage(image, pid, self.FIREBASE_KEY, self.storage)
-        if sky_biometry['status'] == 'success':
-            self.loadToFirebaseDatabase(self.f_db, sky_biometry)
-
-        print(sky_biometry)
+        try:
+            if sky_biometry['status'] == 'success' and len(sky_biometry['photos'][0]['tags']) > 0:
+                self.loadToFirebaseDatabase(self.f_db, sky_biometry)
+                print('[INFO]: ' + log + ' Inserido OK')
+            else:
+                print('[WARNING]: ' + log + ' Falta tag ou não é sucesso')
+        except:
+            print('[ERROR]: ' + log + ' Documento não inserido')
+        # print(sky_biometry)
         return sky_biometry
     
     def listAllData(self):
         resposta = self.f_db.child("sky").get().val()
+        return dict(resposta)
+    
+    def listData(self, document_id):
+        resposta = self.f_db.child("sky" + '/' + document_id).get().val()
         return dict(resposta)
     
     

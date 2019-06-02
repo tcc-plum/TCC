@@ -40,7 +40,11 @@ class WorkFiles:
                         diretorio = self.RAIZ + '/' + pasta
                         dataNome = self.getCurrentDateAsId()
                         arquivos = glob.glob(diretorio + '/*.jpg')
+                        print('[INFO]: Cluster: ' + pasta)
                         for arquivo in arquivos:
+                                
+                                log = str(arquivos.index(arquivo) + 1) + '/' + str(len(arquivos))
+                                
                                 arquivo_local = arquivo.replace(os.sep,'/')
                                 list_arquivo = arquivo_local.split(sep='/')
                                 arquivo_firebase = list_arquivo[1] + '/' + list_arquivo[3]
@@ -54,10 +58,11 @@ class WorkFiles:
                                 caminho_json = 'cluster' + '/' + path_id
                                 ## salva no banco de dados
                                 resultado_banco = self.f_db.child(caminho_json).push(resultado)
-                                print(resultado_banco)
+                                # print(resultado_banco)
                                 ## consulta sky
-                                biometry = self.biometry.skyBiometry(arquivo_local, url_imagem, path_id)
-                                print(biometry)
+                                biometry = self.biometry.skyBiometry(arquivo_local, url_imagem, path_id, log)
+                                # print(biometry)
+                                
                 return
         
         def listAllClusters(self):

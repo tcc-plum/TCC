@@ -4,6 +4,7 @@ from flask_restful import Resource
 ## owned packages
 from work_files import WorkFiles
 from sky_biometry import SkyBiometry
+from face_streaming import FaceStreaming
 
 app = Flask(__name__)
 
@@ -44,7 +45,11 @@ def cluster_pasta(pasta):
     return render_template('pasta.html', title='Pasta', imagens=imagens, pasta=pasta)
 
 
-
+# @app.route('/camera/', methods=['POST'])
+# def camera():
+#     streaming = FaceStreaming()
+#     streaming.faceFromStreamingVideo()
+    # return render_template('vazia.html', title='Camera', label='Camera', texto='Detecta rostos dos frames')
 
 
 

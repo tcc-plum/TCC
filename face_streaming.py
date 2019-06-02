@@ -4,6 +4,7 @@ import datetime
 import json
 import os
 import pyrebase
+from clusterization import FaceClusterization
 
 
 class FaceStreaming:
@@ -88,6 +89,8 @@ class FaceStreaming:
             cv2.imshow('Video', frame)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
+                fc = FaceClusterization()
+                fc.cluster('./frames', './cluster')
                 break
 
         # When everything is done, release the capture
