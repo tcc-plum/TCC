@@ -2,7 +2,7 @@
 
 from pyfacy import face_clust
 import os
-
+import shutil
 
 class FaceClusterization:
 
@@ -14,6 +14,9 @@ class FaceClusterization:
             print('O caminho informado não existe')
             return False
 
+        if os.path.exists(to_path):
+            shutil.rmtree(to_path, ignore_errors=True)
+            
         if not os.path.exists(to_path):
             os.makedirs(to_path)
 

@@ -10,15 +10,27 @@ import os
 
 class SkyBiometry:
     # constants
-    SKY_API_KEY = "cqm6psmc935f0svh5igl162kc9"
-    SKY_API_SECRET = "vj06aa6179mffof6h9mfvkrhcm"
+    ## chave do William
+    SKY_API_KEY = "7spe2on6kr9bva7b7m5hrokc31"
+    SKY_API_SECRET =  "1s00ucu8ijg98flecmaqnhpi8g"
+    
+    ## chave do Kaue
+    # SKY_API_KEY = "3ogvrg5ej8thp4r1lpa97tbhg9"
+    # SKY_API_SECRET = "l9kus97mjm2cs0d5jup2ird06m"
+    
+    ## chave do projeto
+    #SKY_API_KEY = "cqm6psmc935f0svh5igl162kc9"
+    #SKY_API_SECRET = "vj06aa6179mffof6h9mfvkrhcm"
     FIREBASE_KEY = "AIzaSyBYZqhEllq8-vN0XN_yBpav54CCVGRHq9E"
     FIREBASE_AUTH = "teste-tcc-2c7b3.firebaseapp.com"
     FIREBASE_DATABASE = "https://teste-tcc-2c7b3.firebaseio.com/"
     FIREBASE_STORAGE = "teste-tcc-2c7b3.appspot.com"
 
-    def __init__(self, url_image):
-        self.url_image = url_image
+    # def __init__(self, url_image):
+    #     self.url_image = url_image
+        
+    def __init__(self):
+        __self__ = self
 
     # setting up Firebase application
     k_fields = ["apiKey", "authDomain", "databaseURL", "storageBucket"]
@@ -60,27 +72,41 @@ class SkyBiometry:
         result_db = f_db.child("sky").push(json_file)
         return result_db
 
-    def skyBiometry(self):
+    def skyBiometry(self, url_image, f_url_image, cluster_id):
         # read image from url
-        image_http = requests.get(self.url_image)
-        image = Image.open(BytesIO(image_http.content))
+        # image_http = requests.get(url_image)
+        # image = Image.open(BytesIO(image_http.content))
 
         # using Sky Biometry API for face detect
+        # url_sky_biometry = [
+        #     "https://api.skybiometry.com/fc/faces/detect.json?api_key=" + self.SKY_API_KEY +
+        #     "&api_secret=" + self.SKY_API_SECRET +
+        #     "&urls=" + url_image + "&attributes=all"]
         url_sky_biometry = [
             "https://api.skybiometry.com/fc/faces/detect.json?api_key=" + self.SKY_API_KEY +
-            "&api_secret=" + self.SKY_API_SECRET +
-            "&urls=" + self.url_image + "&attributes=all"]
-        sky_biometry = requests.get(url_sky_biometry[0]).json()
-        # sky_biometry_json = sky_biometry.json()
+            "&api_secret=" + self.SKY_API_SECRET + "&attributes=all"]
+        
+        # sky_biometry = requests.get(url_sky_biometry[0]).json()
+        sky_biometry = requests.post(url_sky_biometry[0], files = {'media': open(url_image, 'rb')}).json()
 
-        sky_biometry['cur_date'] = self.getCurrentDateAsId()
+        sky_biometry['current_date'] = self.getCurrentDateAsId()
         sky_biometry['dev_type'] = 'entrance'
+        sky_biometry['img_url'] = url_image
+        sky_biometry['f_url_img'] = f_url_image
+        sky_biometry['cluster_id'] = cluster_id
 
-        pid = sky_biometry['operation_id']
+        # pid = sky_biometry['operation_id']
 
-        self.loadToFirebaseStorage(image, pid, self.FIREBASE_KEY, self.storage)
-        self.loadToFirebaseDatabase(self.f_db, sky_biometry)
+        # self.loadToFirebaseStorage(image, pid, self.FIREBASE_KEY, self.storage)
+        if sky_biometry['status'] == 'success':
+            self.loadToFirebaseDatabase(self.f_db, sky_biometry)
 
         print(sky_biometry)
         return sky_biometry
-
+    
+    def listAllData(self):
+        resposta = self.f_db.child("sky").get().val()
+        return dict(resposta)
+    
+    
+    

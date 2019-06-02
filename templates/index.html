@@ -1,46 +1,142 @@
-{% extends "layout.html" %}
+{% extends 'template.html' %}
+{% set active_page= "index" %}
+
 {% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Perfis
+            <small>Dados sobre os perfis</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/index"><i class="fa fa-dashboard"></i>{{ title }}</a></li>
+            <li class="active">Perfis</li>
+        </ol>
+    </section>
+    
+    <!-- Main content -->
+    <section class="content container-fluid">
+        {% if dados %}
+        <div class="row">
+            {% for chave, valor in dados.items() %}
+                <!-- col it -->
+                <div class="col-md-3">
+                    <!-- Profile Image -->
+                    <div class="box" data-toggle="modal" data-target="#{{ chave }}">
+                        <div class="box-body box-profile">
+                            <img class="profile-user-img img-responsive" src="{{valor.f_url_img}}"
+                                alt="User profile picture">
+                            <ul class="list-group list-group-unbordered no-padding">
 
-		<!--================Home Banner Area =================-->
-		<section class="home_banner_area">
-			<div class="banner_inner">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="home_left_img">
-								<img class="img-fluid" src="/static/img/banner/home-left.png" alt="">
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="banner_content">
-								<h2>
-									
-									Teste Gratuitamente! <br>
-									
-								</h2>
-								<h3>
-									Utilize o sistema de cameras openCV, mande as imagens para o nosso banco e veja o resultado em "Sky test".
-									<br>
-									<br>
-								</h3>
-								<p>
-									Conheça a nossa API de reconhecimento de emoções e de um boost no seu negócio! 
-									
-								</p>
-								<div class="d-flex align-items-center">
-									<a id="play-home-video" class="video-play-button" href="https://youtu.be/aJOTlE1K90k?list=RDMMaJOTlE1K90k">
-										<span></span>
-									</a>
-									<div class="watch_video text-uppercase">
-										Assista o nosso video promocional!
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!--================End Home Banner Area =================-->
+                                {% if valor['photos'][0]['tags'][0]['attributes']['gender'] %}
+                                    <li class="list-group-item">
+                                        <b>Gênero</b> <a class="pull-right">{{ valor['photos'][0]['tags'][0]['attributes']['gender']['value'] }} ({{ valor['photos'][0]['tags'][0]['attributes']['gender']['confidence'] }}%)</a>
+                                    </li>
+                                {% else %}
+                                    <li class="list-group-item">
+                                        <b>Gênero</b> <a class="pull-right">undefined</a>
+                                    </li>
+                                {% endif %}
 
+                                {% if valor['photos'][0]['tags'][0]['attributes']['age_est'] %}
+                                    <li class="list-group-item">
+                                        <b>Idade</b> <a class="pull-right">{{ valor['photos'][0]['tags'][0]['attributes']['age_est']['value'] }} ({{ valor['photos'][0]['tags'][0]['attributes']['age_est']['confidence'] }}%)</a>
+                                    </li>
+                                {% else %}
+                                    <li class="list-group-item">
+                                        <b>Idade</b> <a class="pull-right">undefined</a>
+                                    </li>
+                                {% endif %}
+
+                                {% if valor['photos'][0]['tags'][0]['attributes']['mood'] %}
+                                    <li class="list-group-item">
+                                        <b>Humor</b> <a class="pull-right">{{ valor['photos'][0]['tags'][0]['attributes']['mood']['value'] }} ({{ valor['photos'][0]['tags'][0]['attributes']['mood']['confidence'] }}%)</a>
+                                    </li>
+                                {% else %}
+                                    <li class="list-group-item">
+                                        <b>Humor</b> <a class="pull-right">undefined</a>
+                                    </li>
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                <!-- /.box -->
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="{{ chave }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Mais detalhes</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <img class="profile-user-img img-responsive" src="{{valor.f_url_img}}"
+                                alt="User profile picture">
+                                <ul class="list-group list-group-unbordered no-padding">
+                                    
+                                        <li class="list-group-item">
+                                            <b>Cluster</b> <a class="pull-right">{{ valor['cluster_id'] }}</a>
+                                        </li>
+                                        {% if valor['photos'][0]['tags'][0]['attributes']['gender'] %}
+                                            <li class="list-group-item">
+                                                <b>Gênero</b> <a class="pull-right">{{ valor['photos'][0]['tags'][0]['attributes']['gender']['value'] }} ({{ valor['photos'][0]['tags'][0]['attributes']['gender']['confidence'] }}%)</a>
+                                            </li>
+                                        {% endif %}
+                                        
+                                        {% if valor['photos'][0]['tags'][0]['attributes']['glasses'] %}
+                                            <li class="list-group-item">
+                                                <b>Óculos</b> <a class="pull-right">{{ valor['photos'][0]['tags'][0]['attributes']['glasses']['value'] }} ({{ valor['photos'][0]['tags'][0]['attributes']['glasses']['confidence'] }}%)</a>
+                                            </li>
+                                        {% endif %}
+                
+                                        {% if valor['photos'][0]['tags'][0]['attributes']['smiling'] %}
+                                            <li class="list-group-item">
+                                                <b>Sorrindo</b> <a class="pull-right">{{ valor['photos'][0]['tags'][0]['attributes']['smiling']['value'] }} ({{ valor['photos'][0]['tags'][0]['attributes']['smiling']['confidence'] }}%)</a>
+                                            </li>
+                                        {% endif %}
+            
+                                        {% if valor['photos'][0]['tags'][0]['attributes']['age_est'] %}
+                                            <li class="list-group-item">
+                                                <b>Idade</b> <a class="pull-right">{{ valor['photos'][0]['tags'][0]['attributes']['age_est']['value'] }} ({{ valor['photos'][0]['tags'][0]['attributes']['age_est']['confidence'] }}%)</a>
+                                            </li>
+                                        {% endif %}
+            
+                                        {% if valor['photos'][0]['tags'][0]['attributes']['mood'] %}
+                                            <li class="list-group-item">
+                                                <b>Humor</b> <a class="pull-right">{{ valor['photos'][0]['tags'][0]['attributes']['mood']['value'] }} ({{ valor['photos'][0]['tags'][0]['attributes']['mood']['confidence'] }}%)</a>
+                                            </li>
+                                        {% endif %}
+            
+                                        {% if valor['photos'][0]['tags'][0]['attributes']['lips'] %}
+                                            <li class="list-group-item">
+                                                <b>Lábios</b> <a class="pull-right">{{ valor['photos'][0]['tags'][0]['attributes']['lips']['value'] }} ({{ valor['photos'][0]['tags'][0]['attributes']['lips']['confidence'] }}%)</a>
+                                            </li>
+                                        {% endif %}
+            
+                                        {% if valor['photos'][0]['tags'][0]['attributes']['eyes']  %}
+                                            <li class="list-group-item">
+                                                <b>Olhos</b> <a class="pull-right">{{ valor['photos'][0]['tags'][0]['attributes']['eyes']['value'] }} ({{ valor['photos'][0]['tags'][0]['attributes']['eyes']['confidence'] }}%)</a>
+                                            </li>
+                                        {% endif %}
+            
+                                </ul>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <!-- /.col it -->
+        </div>    
+        {% endif %}
+    </section>
 {% endblock content %}
