@@ -35,35 +35,37 @@ class WorkFiles:
                 ## apagar todos os dados do firebase
                 self.f_db.child("cluster").remove()
                 self.f_db.child("sky").remove()
-                ## sobe todos os dados de cada cluster para o firebase
-                for pasta in os.listdir(self.RAIZ):
-                        diretorio = self.RAIZ + '/' + pasta
-                        dataNome = self.getCurrentDateAsId()
-                        arquivos = glob.glob(diretorio + '/*.jpg')
-                        print('[INFO]: Cluster: ' + pasta)
-                        for arquivo in arquivos:
-                                
-                                log = str(arquivos.index(arquivo) + 1) + '/' + str(len(arquivos))
-                                
-                                arquivo_local = arquivo.replace(os.sep,'/')
-                                list_arquivo = arquivo_local.split(sep='/')
-                                arquivo_firebase = list_arquivo[1] + '/' + list_arquivo[3]
-                                path_id = list_arquivo[2] + '_' + dataNome
-                                resultado = self.storage.child(arquivo_firebase).put(arquivo_local, self.FIREBASE_KEY)
-                                url_imagem = self.storage.child(arquivo_firebase).get_url(self.FIREBASE_KEY)
-                                resultado['img_url'] = url_imagem
-                                resultado['path_local'] = arquivo_local
-                                resultado['path_cloud'] = arquivo_firebase
-                                resultado['path_id'] = path_id
-                                caminho_json = 'cluster' + '/' + path_id
-                                ## salva no banco de dados
-                                resultado_banco = self.f_db.child(caminho_json).push(resultado)
-                                # print(resultado_banco)
-                                ## consulta sky
-                                biometry = self.biometry.skyBiometry(arquivo_local, url_imagem, path_id, log)
-                                # print(biometry)
-                                
-                return
+                
+                if not os.path.exists(self.RAIZ):
+                        return False
+                else:
+                        ## sobe todos os dados de cada cluster para o firebase
+                        for pasta in os.listdir(self.RAIZ):
+                                diretorio = self.RAIZ + '/' + pasta
+                                dataNome = self.getCurrentDateAsId()
+                                arquivos = glob.glob(diretorio + '/*.jpg')
+                                print('[INFO]: Cluster: ' + pasta)
+                                for arquivo in arquivos:
+                                        
+                                        log = str(arquivos.index(arquivo) + 1) + '/' + str(len(arquivos))
+                                        
+                                        arquivo_local = arquivo.replace(os.sep,'/')
+                                        list_arquivo = arquivo_local.split(sep='/')
+                                        arquivo_firebase = list_arquivo[1] + '/' + list_arquivo[3]
+                                        path_id = list_arquivo[2] + '_' + dataNome
+                                        resultado = self.storage.child(arquivo_firebase).put(arquivo_local, self.FIREBASE_KEY)
+                                        url_imagem = self.storage.child(arquivo_firebase).get_url(self.FIREBASE_KEY)
+                                        resultado['img_url'] = url_imagem
+                                        resultado['path_local'] = arquivo_local
+                                        resultado['path_cloud'] = arquivo_firebase
+                                        resultado['path_id'] = path_id
+                                        caminho_json = 'cluster' + '/' + path_id
+                                        ## consulta sky
+                                        biometry = self.biometry.skyBiometry(arquivo_local, url_imagem, path_id, log)
+                                        ## salva no banco de dados
+                                        if biometry:
+                                                resultado_banco = self.f_db.child(caminho_json).push(resultado)
+                        return True
         
         def listAllClusters(self):
                 resposta = self.f_db.child("cluster").get().val()

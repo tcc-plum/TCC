@@ -11,12 +11,12 @@ import os
 class SkyBiometry:
     # constants
     ## chave do William
-    SKY_API_KEY = "7spe2on6kr9bva7b7m5hrokc31"
-    SKY_API_SECRET =  "1s00ucu8ijg98flecmaqnhpi8g"
+    # SKY_API_KEY = "7spe2on6kr9bva7b7m5hrokc31"
+    # SKY_API_SECRET =  "1s00ucu8ijg98flecmaqnhpi8g"
     
     ## chave do Kaue
-    # SKY_API_KEY = "3ogvrg5ej8thp4r1lpa97tbhg9"
-    # SKY_API_SECRET = "l9kus97mjm2cs0d5jup2ird06m"
+    SKY_API_KEY = "3ogvrg5ej8thp4r1lpa97tbhg9"
+    SKY_API_SECRET = "l9kus97mjm2cs0d5jup2ird06m"
     
     ## chave do projeto
     #SKY_API_KEY = "cqm6psmc935f0svh5igl162kc9"
@@ -104,6 +104,7 @@ class SkyBiometry:
                 print('[INFO]: ' + log + ' Inserido OK')
             else:
                 print('[WARNING]: ' + log + ' Falta tag ou não é sucesso')
+                return False
         except:
             print('[ERROR]: ' + log + ' Documento não inserido')
         # print(sky_biometry)

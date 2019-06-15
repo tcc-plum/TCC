@@ -32,7 +32,17 @@
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <link rel="stylesheet" href="{{url_for('static', filename='dist/css/style.css')}}">
-  </head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" />
+
+    <!-- <style>
+      video, canvas {
+        position: absolute;
+        margin-left: 10%;
+        border: 1px solid red;
+      }
+    </style>
+  </head> -->
 
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -74,14 +84,24 @@
           <!-- /.sidebar-menu -->
         </section>
 
-        <!-- <form action="/camera/" method="POST" class="sidebar-form">
+        <form action="/camera/" method="POST" class="sidebar-form">
             <div class="input-group">
               <span class="input-group-btn">
                     <button type="submit" name="search" id="search-btn" class="btn btn-flat form-control"><i class="fa fa-camera"></i>
                       Inicializar Câmera</button>
                   </span>
             </div>
-          </form> -->
+          </form>
+
+
+          <form action="/push" method="POST" class="sidebar-form">
+            <div class="input-group">
+              <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat form-control"><i class="fa fa-database"></i>
+                      Enviar Dados</button>
+                  </span>
+            </div>
+          </form>
 
         <!-- /.sidebar -->
       </aside>
@@ -109,6 +129,48 @@
 
     <!-- AdminLTE App -->
     <script src="{{url_for('static', filename='dist/js/adminlte.min.js')}}"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
+    <script>
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                event.preventDefault();
+                $(this).ekkoLightbox();
+            });
+    </script>
+
+    <!-- Tracking js -->
+    <!-- <script src="{{url_for('static', filename='build/trackingjs/tracking-min.js')}}"></script>
+    <script src="{{url_for('static', filename='build/trackingjs/data/face-min.js')}}"></script>
+
+
+    <script>
+      function init(){
+        const video = document.getElementById('video')
+        const canvas = document.getElementById('canvas')
+        const context = canvas.getContext('2d')
+        const tracker = new tracking.ObjectTracker('face')
+
+        tracking.track('#video', tracker, { camera: true })
+
+        tracker.on('track', event => {
+          // console.log(event)
+
+          context.clearRect(0, 0, canvas.width, canvas.height)
+          event.data.forEach( rect => {
+            console.log(rect)
+            context.strokeStyle = '#ff0000'
+            context.lineWidth = 2
+            context.strokeRect(rect.x, rect.y, rect.width, rect.height)
+          })
+
+        })
+
+      }
+    window.onload = init()
+    
+    </script> -->
 
 
   </body>

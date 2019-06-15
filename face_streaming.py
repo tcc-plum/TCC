@@ -49,7 +49,6 @@ class FaceStreaming:
 
     # using realtime video
     def faceFromStreamingVideo(self):
-
         classifier_1 = cv2.CascadeClassifier('./train_data/haarcascade_frontalface_default.xml')
 
         video_capture = cv2.VideoCapture(0)
@@ -90,10 +89,11 @@ class FaceStreaming:
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 fc = FaceClusterization()
-                fc.cluster('./frames', './cluster')
+                resultado = fc.cluster('./frames', './cluster')
                 break
 
         # When everything is done, release the capture
         video_capture.release()
         cv2.destroyAllWindows()
+        return resultado
 

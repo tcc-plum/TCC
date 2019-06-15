@@ -1,5 +1,5 @@
 {% extends 'template.html' %}
-{% set content_page = "cluster"  %}
+{% set active_page = "cluster"  %}
 {% block content %}
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -29,7 +29,9 @@
                         <div class="col-md-1">
                             <!-- Profile Image -->
                             <div class="box" data-toggle="modal" data-target="#myModal">
-                                <img class="profile-user-img img-responsive" src="{{imagem}}" alt="Frames">
+                                <a href="{{imagem}}" data-toggle="lightbox">
+                                    <img class="profile-user-img img-responsive" src="{{imagem}}" alt="Frames">
+                                </a>
                                 <!-- /.box-body -->
                             </div>
                             <!-- /.box -->

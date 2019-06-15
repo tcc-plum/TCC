@@ -1,5 +1,5 @@
 {% extends 'template.html' %}
-{% set content_page = "cluster"  %}
+{% set active_page = "cluster"  %}
 {% block content %}
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -21,11 +21,14 @@
       <div class="col-md-12">
         <!-- Category -->
         <div class="single category">
-          <h3 class="side-title">Total: <b>{{ quantidade }}</b></h3>
+          <h3 class="side-title">Clusters | <b>{{ quantidade }}</b>
+            <span class="pull-right">Frames | <b>{{ total_frames }}</b></span>
+          </h3>
           <ul class="list-unstyled">
             {% for chave, valor in clusters.items() %}
-            <li><a href="cluster/{{ chave }}" title="">{{ chave }} <span
-                  class="pull-right"><b>{{ valor|length }}</b></span></a></li>
+            <li><a href="cluster/{{ chave }}" title="">{{ chave }} 
+              <span class="pull-right"> | <b>{{ valor|length }}</b></span></a>
+            </li>
             {% endfor %}
           </ul>
         </div>
